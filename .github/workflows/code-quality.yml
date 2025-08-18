@@ -43,7 +43,7 @@ jobs:
 
       # ✅ Coding Standard Check (PSR-12)
       - name: Run PHP-CS-Fixer
-        run: vendor/bin/php-cs-fixer --dry-run --diff fix
+        run: vendor/bin/php-cs-fixer fix --dry-run --diff --using-cache=no
 
       # ✅ Static Analysis with PHPStan
       - name: Run PHPStan
