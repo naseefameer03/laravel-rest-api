@@ -29,7 +29,7 @@ if (!function_exists('api_paginate')) {
             'status'    => true,
             'message'   => $message,
             'data'      => $paginator->items(),
-            'pagination'=> [
+            'pagination' => [
                 'total'        => $paginator->total(),
                 'count'        => $paginator->count(),
                 'per_page'     => $paginator->perPage(),

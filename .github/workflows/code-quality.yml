@@ -2,9 +2,9 @@ name: Laravel Code Quality & PR Checks
 
 on:
   pull_request:
-    branches: [ "main", "develop" ]
+    branches: [ "master", "main", "develop" ]
   push:
-    branches: [ "main", "develop" ]
+    branches: [ "master", "main", "develop" ]
 
 jobs:
   laravel-quality:
@@ -43,11 +43,11 @@ jobs:
 
       # ✅ Coding Standard Check (PSR-12)
       - name: Run PHP-CS-Fixer
-        run: vendor/bin/php-cs-fixer --dry-run --diff fix
+        run: vendor/bin/php-cs-fixer fix --dry-run --diff --using-cache=no
 
       # ✅ Static Analysis with PHPStan
       - name: Run PHPStan
-        run: vendor/bin/phpstan analyse --memory-limit=512M
+        run: vendor/bin/phpstan analyse --configuration=phpstan.neon
 
       # ✅ Run Tests (PHPUnit or Pest)
       - name: Run Tests
