@@ -4,6 +4,13 @@ namespace App\Http\Requests\Api;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * Class LoginRequest
+ *
+ * Handles validation for login requests.
+ *  @property string $email
+ *  @property string $password
+ */
 class LoginRequest extends FormRequest
 {
     /**

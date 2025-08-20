@@ -12,6 +12,12 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
+    /**
+     * Register a new user.
+     *
+     * @param RegisterRequest $request
+     * @return JsonResponse
+     */
     public function register(RegisterRequest $request): JsonResponse
     {
         $user = User::create([
@@ -26,6 +32,12 @@ class AuthController extends Controller
         ], 201);
     }
 
+    /**
+     * Login a user and return an access token.
+     *
+     * @param LoginRequest $request
+     * @return JsonResponse
+     */
     public function login(LoginRequest $request): JsonResponse
     {
         $user = User::where('email', $request->email)->first();
@@ -43,15 +55,26 @@ class AuthController extends Controller
         ]);
     }
 
+    /**
+     * Logout the authenticated user.
+     *
+     * @return JsonResponse
+     */
+
     public function logout(): JsonResponse
     {
-        Auth::user()->currentAccessToken()->delete();
-
+        auth()->user()?->currentAccessToken()->delete();
+        /** @var \App\Models\User $user */
         return response()->json([
             'message' => 'Logged out successfully',
         ]);
     }
 
+    /**
+     * Get the authenticated user.
+     *
+     * @return JsonResponse
+     */
     public function user(): JsonResponse
     {
         return response()->json(Auth::user());
