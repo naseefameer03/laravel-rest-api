@@ -4,6 +4,14 @@ namespace App\Http\Requests\Api;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * Class RegisterRequest
+ *
+ * Handles validation for user registration requests.
+ *  @property string $name
+ *  @property string $email
+ *  @property string $password
+ */
 class RegisterRequest extends FormRequest
 {
     /**
