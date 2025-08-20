@@ -64,7 +64,7 @@ class AuthController extends Controller
     public function logout(): JsonResponse
     {
         auth()->user()?->currentAccessToken()->delete();
-        /** @var \App\Models\User $user */
+
         return response()->json([
             'message' => 'Logged out successfully',
         ]);
