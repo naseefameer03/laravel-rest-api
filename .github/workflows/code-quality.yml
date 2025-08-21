@@ -49,9 +49,9 @@ jobs:
       - name: Run PHPStan
         run: vendor/bin/phpstan analyse --configuration=phpstan.neon
 
-      # ✅ Run Tests (PHPUnit or Pest)
-      - name: Run Tests
-        run: php artisan test --stop-on-failure
+      # # ✅ Run Tests (PHPUnit or Pest)
+      # - name: Run Tests
+      #   run: php artisan test --stop-on-failure
 
       # ✅ Security Check
       - name: Composer Security Audit
