@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 class MessageController extends Controller
 {
-     // Send a message
+    // Send a message
     public function send(Request $request)
     {
         $request->validate([
@@ -30,9 +30,9 @@ class MessageController extends Controller
     public function conversation($userId)
     {
         $messages = Message::where(function ($q) use ($userId) {
-                $q->where('sender_id', Auth::id())
-                  ->where('receiver_id', $userId);
-            })
+            $q->where('sender_id', Auth::id())
+              ->where('receiver_id', $userId);
+        })
             ->orWhere(function ($q) use ($userId) {
                 $q->where('sender_id', $userId)
                   ->where('receiver_id', Auth::id());
