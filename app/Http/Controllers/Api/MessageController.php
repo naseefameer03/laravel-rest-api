@@ -14,7 +14,7 @@ class MessageController extends Controller
     {
         $request->validate([
             'receiver_id' => 'required|exists:users,id',
-            'message' => 'required|string',
+            'message'     => 'required|string'
         ]);
 
         $msg = Message::create([
