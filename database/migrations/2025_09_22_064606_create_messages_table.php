@@ -14,8 +14,9 @@ return new class () extends Migration {
             $table->id();
             $table->foreignId('sender_id')->constrained('users');
             $table->foreignId('receiver_id')->constrained('users');
-            $table->text('content');
+            $table->text('message');
             $table->enum('type', ['text', 'image', 'video', 'file'])->default('text');
+            $table->tinyInteger('is_read')->default(0);
             $table->timestamps();
         });
     }
