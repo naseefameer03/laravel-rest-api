@@ -50,7 +50,7 @@ class UserPolicy
         if ($user->id === $model->id) {
             return false;
         }
-        
+
         // Rule: Only users with the 'delete users' permission can delete others
         return $user->can('delete users');
     }
