@@ -15,6 +15,8 @@ return new class () extends Migration {
             $table->string('title');
             $table->text('content');
             $table->unsignedBigInteger('user_id'); // to show relationship with user
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->timestamp('published_at')->nullable();
             $table->timestamps();
         });
     }

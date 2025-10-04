@@ -62,4 +62,14 @@ class ArticleController extends Controller
 
         return response()->json(['message' => 'Article deleted successfully'], 200);
     }
+
+    public function publish(Article $article)
+    {
+        $this->authorize('publish', $article);
+
+        $article->published_at = now();
+        $article->save();
+
+        return response()->json(['message' => 'Article published successfully.'], 200);
+    }
 }

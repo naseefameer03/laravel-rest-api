@@ -9,7 +9,7 @@ class Article extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'content', 'user_id'];
+    protected $fillable = ['title', 'content', 'user_id', 'published_at'];
 
     public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
