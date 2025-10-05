@@ -8,9 +8,10 @@ use Illuminate\Foundation\Http\FormRequest;
  * Class RegisterRequest
  *
  * Handles validation for user registration requests.
- *  @property string $name
- *  @property string $email
- *  @property string $password
+ *
+ * @property string $name
+ * @property string $email
+ * @property string $password
  */
 class RegisterRequest extends FormRequest
 {
@@ -30,8 +31,8 @@ class RegisterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'     => 'required|string|max:255',
-            'email'    => 'required|email|unique:users',
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users',
             'password' => 'required|string|min:6|confirmed',
         ];
     }

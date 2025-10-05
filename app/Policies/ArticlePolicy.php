@@ -9,6 +9,7 @@ use Illuminate\Auth\Access\HandlesAuthorization;
 class ArticlePolicy
 {
     use HandlesAuthorization;
+
     /**
      * Determine whether the user can view any models.
      */
@@ -54,9 +55,11 @@ class ArticlePolicy
             if ($user->hasRole('author')) {
                 return $user->id === $article->user_id;
             }
+
             // An editor or admin can edit any article
             return true;
         }
+
         return false;
     }
 

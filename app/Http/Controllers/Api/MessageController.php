@@ -14,13 +14,13 @@ class MessageController extends Controller
     {
         $request->validate([
             'receiver_id' => 'required|exists:users,id',
-            'message'     => 'required|string'
+            'message' => 'required|string',
         ]);
 
         $msg = Message::create([
-            'sender_id'   => Auth::id(),
+            'sender_id' => Auth::id(),
             'receiver_id' => $request->receiver_id,
-            'message'     => $request->message,
+            'message' => $request->message,
         ]);
 
         return response()->json(['success' => true, 'message' => $msg], 201);
@@ -31,11 +31,11 @@ class MessageController extends Controller
     {
         $messages = Message::where(function ($q) use ($userId) {
             $q->where('sender_id', Auth::id())
-              ->where('receiver_id', $userId);
+                ->where('receiver_id', $userId);
         })
             ->orWhere(function ($q) use ($userId) {
                 $q->where('sender_id', $userId)
-                  ->where('receiver_id', Auth::id());
+                    ->where('receiver_id', Auth::id());
             })
             ->orderBy('created_at', 'asc')
             ->get();

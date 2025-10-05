@@ -18,7 +18,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('logout', [AuthController::class, 'logout']);
 
     Route::delete('/users/{user}', [UserController::class, 'destroy'])
-         ->middleware('permission:delete users');
+        ->middleware('permission:delete users');
 
     Route::prefix('v1')->group(function () {
         Route::apiResource('articles', ArticleController::class);

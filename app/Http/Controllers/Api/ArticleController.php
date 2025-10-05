@@ -16,6 +16,7 @@ class ArticleController extends Controller
     public function index()
     {
         $articles = Article::with('user')->paginate(10);
+
         return response()->json($articles, 200);
     }
 
@@ -24,13 +25,13 @@ class ArticleController extends Controller
     {
         $validated = $request->validate([
             'title' => 'required|string|max:255',
-            'content' => 'required|string'
+            'content' => 'required|string',
         ]);
 
         $article = Article::create([
             'title' => $validated['title'],
             'content' => $validated['content'],
-            'user_id' => Auth::id()
+            'user_id' => Auth::id(),
         ]);
 
         return response()->json(['message' => 'Article created successfully', 'data' => $article], 201);
@@ -40,6 +41,7 @@ class ArticleController extends Controller
     public function show($id)
     {
         $article = Article::with('user')->findOrFail($id);
+
         return response()->json($article, 200);
     }
 
@@ -48,7 +50,7 @@ class ArticleController extends Controller
     {
         $validated = $request->validate([
             'title' => 'sometimes|required|string|max:255',
-            'content' => 'sometimes|required|string'
+            'content' => 'sometimes|required|string',
         ]);
 
         $article = Article::findOrFail($id);

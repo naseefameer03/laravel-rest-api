@@ -20,7 +20,7 @@ class ApiService
         try {
             $response = Http::timeout(10)->withOptions([
                 'verify' => false, // Disable SSL verify if needed
-            ])->{$method}($this->baseUrl . $endpoint, $options);
+            ])->{$method}($this->baseUrl.$endpoint, $options);
 
             // Throw exception for 4xx & 5xx
             $response->throw();
@@ -29,9 +29,9 @@ class ApiService
         } catch (RequestException $e) {
             // Log and rethrow or return custom error
             Log::error('API Request Failed', [
-                'method'   => $method,
+                'method' => $method,
                 'endpoint' => $endpoint,
-                'error'    => $e->getMessage(),
+                'error' => $e->getMessage(),
             ]);
 
             return [
