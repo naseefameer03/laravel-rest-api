@@ -31,11 +31,11 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.2'
-          extensions: mbstring, intl, pdo_mysql
+          extensions: mbstring, bcmath, intl, pdo_mysql
           coverage: xdebug
 
       - name: Install dependencies
-        run: composer install --prefer-dist --no-progress
+        run: composer install --prefer-dist --no-progress --optimize-autoloader
 
       - name: Setup environment
         run: cp .env.example .env
