@@ -1,0 +1,58 @@
+name: Laravel Code Quality & PR Checks
+
+on:
+  pull_request:
+    branches: [ "master", "main", "develop" ]
+  push:
+    branches: [ "master", "main", "develop" ]
+
+jobs:
+  laravel-quality:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2' # Adjust to your project PHP version
+          extensions: mbstring, bcmath, intl, pdo_mysql
+          coverage: none
+
+      - name: Cache Composer packages
+        uses: actions/cache@v3
+        with:
+          path: vendor
+          key: composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: composer-
+
+      - name: Install Dependencies
+        run: composer install --no-progress --prefer-dist --optimize-autoloader
+
+      - name: Copy Environment
+        run: cp .env.example .env
+
+      - name: Generate App Key
+        run: php artisan key:generate
+
+      # ✅ PHP Lint Check
+      - name: Check PHP Syntax
+        run: find app -type f -name "*.php" -exec php -l {} \;
+
+      # ✅ Coding Standard Check (PSR-12)
+      - name: Run PHP-CS-Fixer
+        run: vendor/bin/php-cs-fixer fix --dry-run --diff --using-cache=no
+
+      # ✅ Static Analysis with PHPStan
+      - name: Run PHPStan
+        run: vendor/bin/phpstan analyse --configuration=phpstan.neon
+
+      # # ✅ Run Tests (PHPUnit or Pest)
+      # - name: Run Tests
+      #   run: php artisan test --stop-on-failure
+
+      # ✅ Security Check
+      - name: Composer Security Audit
+        run: composer audit

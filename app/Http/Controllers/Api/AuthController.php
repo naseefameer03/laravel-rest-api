@@ -15,15 +15,12 @@ class AuthController extends Controller
 {
     /**
      * Register a new user.
-     *
-     * @param RegisterRequest $request
-     * @return JsonResponse
      */
     public function register(RegisterRequest $request): JsonResponse
     {
         $user = User::create([
-            'name'     => $request->name,
-            'email'    => $request->email,
+            'name' => $request->name,
+            'email' => $request->email,
             'password' => bcrypt($request->password),
         ]);
 
@@ -31,15 +28,12 @@ class AuthController extends Controller
 
         return response()->json([
             'message' => 'User registered successfully',
-            'user'    => $user,
+            'user' => $user,
         ], 201);
     }
 
     /**
      * Login a user and return an access token.
-     *
-     * @param LoginRequest $request
-     * @return JsonResponse
      */
     public function login(LoginRequest $request): JsonResponse
     {
@@ -53,17 +47,14 @@ class AuthController extends Controller
 
         return response()->json([
             'message' => 'Login successful',
-            'token'   => $token,
-            'user'    => $user,
+            'token' => $token,
+            'user' => $user,
         ]);
     }
 
     /**
      * Logout the authenticated user.
-     *
-     * @return JsonResponse
      */
-
     public function logout(): JsonResponse
     {
         $request = request();
@@ -76,8 +67,6 @@ class AuthController extends Controller
 
     /**
      * Get the authenticated user.
-     *
-     * @return JsonResponse
      */
     public function user(): JsonResponse
     {

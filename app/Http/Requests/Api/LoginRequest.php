@@ -8,8 +8,9 @@ use Illuminate\Foundation\Http\FormRequest;
  * Class LoginRequest
  *
  * Handles validation for login requests.
- *  @property string $email
- *  @property string $password
+ *
+ * @property string $email
+ * @property string $password
  */
 class LoginRequest extends FormRequest
 {
@@ -29,7 +30,7 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email'    => 'required|email',
+            'email' => 'required|email',
             'password' => 'required|string',
         ];
     }

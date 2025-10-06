@@ -33,9 +33,9 @@ class WelcomeUserNotification extends Notification
      */
     public function toMail(object $notifiable): MailMessage
     {
-        return (new MailMessage())
+        return (new MailMessage)
             ->subject('Welcome to Our Platform')
-            ->greeting('Hello ' . $notifiable->name . ',')
+            ->greeting('Hello '.$notifiable->name.',')
             ->line('We’re excited to have you on board!')
             ->action('Visit Dashboard', url('/'))
             ->line('Thank you for registering!');
@@ -44,7 +44,7 @@ class WelcomeUserNotification extends Notification
     public function toDatabase($notifiable)
     {
         return [
-            'message' => 'Welcome ' . $notifiable->name . '! Thanks for joining us.',
+            'message' => 'Welcome '.$notifiable->name.'! Thanks for joining us.',
             'url' => url('/'),
         ];
     }
