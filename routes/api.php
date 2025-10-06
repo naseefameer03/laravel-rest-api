@@ -20,12 +20,12 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/users/{user}', [UserController::class, 'destroy'])
         ->middleware('permission:delete users');
 
-    Route::prefix('v1')->group(function () {
+    // Route::prefix('v1')->group(function () {
         Route::apiResource('articles', ArticleController::class);
 
         Route::post('/messages/send', [MessageController::class, 'send']);
         Route::get('/messages/conversation/{userId}', [MessageController::class, 'conversation']);
         Route::get('/messages/inbox', [MessageController::class, 'inbox']);
         Route::patch('/messages/{id}/read', [MessageController::class, 'markAsRead']);
-    });
+    // });
 });
