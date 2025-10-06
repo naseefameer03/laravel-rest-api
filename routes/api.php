@@ -21,11 +21,11 @@ Route::middleware('auth:sanctum')->group(function () {
         ->middleware('permission:delete users');
 
     // Route::prefix('v1')->group(function () {
-        Route::apiResource('articles', ArticleController::class);
+    Route::apiResource('articles', ArticleController::class);
 
-        Route::post('/messages/send', [MessageController::class, 'send']);
-        Route::get('/messages/conversation/{userId}', [MessageController::class, 'conversation']);
-        Route::get('/messages/inbox', [MessageController::class, 'inbox']);
-        Route::patch('/messages/{id}/read', [MessageController::class, 'markAsRead']);
+    Route::post('/messages/send', [MessageController::class, 'send']);
+    Route::get('/messages/conversation/{userId}', [MessageController::class, 'conversation']);
+    Route::get('/messages/inbox', [MessageController::class, 'inbox']);
+    Route::patch('/messages/{id}/read', [MessageController::class, 'markAsRead']);
     // });
 });
