@@ -14,7 +14,7 @@ export default function Login() {
     try {
       const res = await api.post("/login", { email, password });
       localStorage.setItem("token", res.data.token);
-      // navigate("/dashboard");
+      navigate("/dashboard");
     } catch {
       setError("Invalid credentials");
     }
