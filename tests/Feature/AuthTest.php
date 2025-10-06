@@ -19,7 +19,7 @@ class AuthTest extends TestCase
             'password_confirmation' => 'password',
         ];
 
-        $response = $this->postJson('/api/auth/register', $payload);
+        $response = $this->postJson('/api/register', $payload);
 
         $response->assertCreated()
             ->assertJsonStructure(['message', 'user' => ['id', 'name', 'email']]);
@@ -41,7 +41,7 @@ class AuthTest extends TestCase
             'password' => 'secret123',
         ];
 
-        $response = $this->postJson('/api/auth/login', $payload);
+        $response = $this->postJson('/api/login', $payload);
 
         $response->assertOk()
             ->assertJsonStructure(['message', 'token', 'user' => ['id', 'name', 'email']]);
@@ -59,7 +59,7 @@ class AuthTest extends TestCase
             'password' => 'wrongpass',
         ];
 
-        $response = $this->postJson('/api/auth/login', $payload);
+        $response = $this->postJson('/api/login', $payload);
 
         $response->assertStatus(401)
             ->assertJson(['message' => 'Invalid credentials']);
