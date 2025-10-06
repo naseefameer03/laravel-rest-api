@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import api from "../api/axios";
+import api from "../../api/axios";
 import "./Login.css"; // Import the external CSS file
 
 export default function Login() {
@@ -14,7 +14,7 @@ export default function Login() {
     try {
       const res = await api.post("/login", { email, password });
       localStorage.setItem("token", res.data.token);
-      // navigate("/dashboard");
+      navigate("/dashboard");
     } catch {
       setError("Invalid credentials");
     }
