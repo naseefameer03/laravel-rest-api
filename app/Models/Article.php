@@ -6,10 +6,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
+use Spatie\Image\Enums\Fit;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Spatie\Tags\HasTags;
 
 class Article extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, InteractsWithMedia, HasTags;
 
     protected $fillable = [
         'user_id',
@@ -27,10 +31,10 @@ class Article extends Model
         'meta' => 'array',
     ];
 
-    protected static function booted()
+    protected static function booted(): void
     {
-        static::creating(function (Article $article) {
-            if (empty($article->slug)) {
+        static::creating(function (Article $article): void {
+            if (!$article->slug) {
                 $base = Str::slug($article->title);
                 $slug = $base;
                 $i = 1;
@@ -73,5 +77,27 @@ class Article extends Model
     public function scopePublished($q)
     {
         return $q->where('status', 'published')->whereNotNull('published_at')->where('published_at', '<=', now());
+    }
+
+    // Media Library
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('images')->useDisk('public'); // configure disk as needed
+        $this->addMediaCollection('cover')->singleFile()->useDisk('public');
+    }
+
+    public function registerMediaConversions(Media $media = null): void
+    {
+        $this->addMediaConversion('thumb')
+            ->fit(Fit::Crop, 300, 300)
+            ->format('webp');
+
+        $this->addMediaConversion('medium')
+            ->fit(Fit::Contain, 800, 800)
+            ->format('webp');
+
+        $this->addMediaConversion('large')
+            ->fit(Fit::Contain, 1600, 1600)
+            ->format('webp');
     }
 }
