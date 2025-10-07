@@ -13,12 +13,18 @@ return new class extends Migration
     {
         Schema::create('articles', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->string('title');
-            $table->text('content');
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->timestamp('published_at')->nullable();
+            $table->string('slug')->unique();
+            $table->text('excerpt')->nullable();
+            $table->longText('content')->nullable();
+            $table->string('status')->default('draft')->index();  // draft|published|archived
+            $table->timestamp('published_at')->nullable()->index();
+            $table->json('meta')->nullable();
+            $table->softDeletes();
             $table->timestamps();
+
+            $table->index(['status', 'published_at']);
         });
     }
 
