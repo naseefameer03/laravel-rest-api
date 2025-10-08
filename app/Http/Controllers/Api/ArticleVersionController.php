@@ -16,6 +16,7 @@ class ArticleVersionController extends Controller
     public function show(Article $article, ArticleVersion $version)
     {
         abort_unless($version->article_id === $article->id, 404);
+
         return $version;
     }
 
@@ -24,10 +25,10 @@ class ArticleVersionController extends Controller
         abort_unless($version->article_id === $article->id, 404);
 
         $article->update([
-            'title'   => $version->title,
+            'title' => $version->title,
             'excerpt' => $version->excerpt,
             'content' => $version->content,
-            'status'  => $version->status,
+            'status' => $version->status,
         ]);
 
         return $article->fresh();

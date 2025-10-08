@@ -12,12 +12,12 @@ class ArticleObserver
     {
         ArticleVersion::create([
             'article_id' => $article->id,
-            'version'    => 1,
+            'version' => 1,
             'created_by' => Auth::id(),
-            'title'      => $article->title,
-            'excerpt'    => $article->excerpt,
-            'content'    => $article->content,
-            'status'     => $article->status,
+            'title' => $article->title,
+            'excerpt' => $article->excerpt,
+            'content' => $article->content,
+            'status' => $article->status,
         ]);
     }
 
@@ -28,12 +28,12 @@ class ArticleObserver
 
         ArticleVersion::create([
             'article_id' => $article->id,
-            'version'    => $last + 1,
+            'version' => $last + 1,
             'created_by' => Auth::id(),
-            'title'      => $article->getOriginal('title'),
-            'excerpt'    => $article->getOriginal('excerpt'),
-            'content'    => $article->getOriginal('content'),
-            'status'     => $article->getOriginal('status'),
+            'title' => $article->getOriginal('title'),
+            'excerpt' => $article->getOriginal('excerpt'),
+            'content' => $article->getOriginal('content'),
+            'status' => $article->getOriginal('status'),
         ]);
     }
 }

@@ -13,7 +13,7 @@ use Spatie\Tags\HasTags;
 
 class Article extends Model
 {
-    use HasFactory, SoftDeletes, InteractsWithMedia, HasTags;
+    use HasFactory, HasTags, InteractsWithMedia, SoftDeletes;
 
     protected $fillable = [
         'user_id',
@@ -23,7 +23,7 @@ class Article extends Model
         'content',
         'status',
         'published_at',
-        'meta'
+        'meta',
     ];
 
     protected $casts = [
@@ -34,7 +34,7 @@ class Article extends Model
     protected static function booted(): void
     {
         static::creating(function (Article $article): void {
-            if (!$article->slug) {
+            if (! $article->slug) {
                 $base = Str::slug($article->title);
                 $slug = $base;
                 $i = 1;
@@ -86,7 +86,7 @@ class Article extends Model
         $this->addMediaCollection('cover')->singleFile()->useDisk('public');
     }
 
-    public function registerMediaConversions(Media $media = null): void
+    public function registerMediaConversions(?Media $media = null): void
     {
         $this->addMediaConversion('thumb')
             ->fit(Fit::Crop, 300, 300)

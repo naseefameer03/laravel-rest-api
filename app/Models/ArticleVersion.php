@@ -13,7 +13,7 @@ class ArticleVersion extends Model
         'title',
         'excerpt',
         'content',
-        'status'
+        'status',
     ];
 
     public function article()
