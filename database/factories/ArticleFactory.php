@@ -18,9 +18,17 @@ class ArticleFactory extends Factory
     public function definition(): array
     {
         return [
-            'title' => $this->faker->sentence(6), // Random title
-            'content' => $this->faker->paragraph(4), // Random content
-            'user_id' => User::factory(), // Create a user for each article
+            'user_id' => User::factory(),
+            'title' => fake()->sentence(),
+            'slug' => null, // Will be auto-generated
+            'excerpt' => fake()->paragraph(),
+            'content' => fake()->paragraphs(3, true),
+            'status' => fake()->randomElement(['draft', 'published']),
+            'published_at' => fake()->optional()->dateTimeBetween('-1 year', 'now'),
+            'meta' => [
+                'keywords' => implode(', ', fake()->words(5)),
+                'description' => fake()->sentence(),
+            ],
         ];
     }
 }

@@ -11,20 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('articles', function (Blueprint $table) {
+        Schema::create('article_versions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('article_id')->constrained()->cascadeOnDelete();
+            $table->unsignedInteger('version')->index();
+            $table->foreignId('created_by')->nullable()->constrained('users')->nullOnDelete();
             $table->string('title');
-            $table->string('slug')->unique();
             $table->text('excerpt')->nullable();
             $table->longText('content')->nullable();
-            $table->enum('status', ['draft', 'published', 'archived'])->default('draft');
-            $table->timestamp('published_at')->nullable()->index();
-            $table->json('meta')->nullable();
-            $table->softDeletes();
+            $table->string('status');
             $table->timestamps();
 
-            $table->index(['status', 'published_at']);
+            $table->unique(['article_id', 'version']);
         });
     }
 
@@ -33,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('articles');
+        Schema::dropIfExists('article_versions');
     }
 };
