@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('user_id')->nullable()->constrained()->nullOnDelete();
             $table->foreignId('parent_id')->nullable()->constrained('comments')->cascadeOnDelete();
             $table->text('body');
-            $table->string('status')->default('approved'); // approved|pending|spam
+            $table->enum('status', ['approved', 'pending', 'spam'])->default('approved');
             $table->softDeletes();
             $table->timestamps();
 

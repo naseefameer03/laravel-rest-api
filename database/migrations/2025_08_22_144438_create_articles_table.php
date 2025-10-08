@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('slug')->unique();
             $table->text('excerpt')->nullable();
             $table->longText('content')->nullable();
-            $table->string('status')->default('draft')->index();  // draft|published|archived
+            $table->enum('status', ['draft', 'published', 'archived'])->default('draft');
             $table->timestamp('published_at')->nullable()->index();
             $table->json('meta')->nullable();
             $table->softDeletes();

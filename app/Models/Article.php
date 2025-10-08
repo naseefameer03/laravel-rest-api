@@ -31,6 +31,10 @@ class Article extends Model
         'meta' => 'array',
     ];
 
+    const STATUS_DRAFT = 'draft';
+    const STATUS_PUBLISHED = 'published';
+    const STATUS_ARCHIVED = 'archived';
+
     protected static function booted(): void
     {
         static::creating(function (Article $article): void {
