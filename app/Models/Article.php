@@ -34,7 +34,9 @@ class Article extends Model
     ];
 
     const STATUS_DRAFT = 'draft';
+
     const STATUS_PUBLISHED = 'published';
+
     const STATUS_ARCHIVED = 'archived';
 
     protected static function booted(): void
