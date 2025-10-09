@@ -9,9 +9,9 @@ trait ApiResponse
         return response()->json([
             'success' => true,
             'message' => $message,
-            'data'    => $data,
-            'errors'  => null,
-            'code'    => $code,
+            'data' => $data,
+            'errors' => null,
+            'code' => $code,
         ], $code);
     }
 
@@ -20,9 +20,9 @@ trait ApiResponse
         return response()->json([
             'success' => false,
             'message' => $message,
-            'data'    => null,
-            'errors'  => $errors,
-            'code'    => $code,
+            'data' => null,
+            'errors' => $errors,
+            'code' => $code,
         ], $code);
     }
 }
