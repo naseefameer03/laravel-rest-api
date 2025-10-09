@@ -29,7 +29,13 @@ class AuthController extends Controller
 
         event(new UserRegistered($user));
 
-        return $this->successResponse($user, 'User registered successfully', 201);
+        return $this->successResponse([
+            'user' => [
+                'id' => $user->id,
+                'name' => $user->name,
+                'email' => $user->email,
+            ],
+        ], 'User registered successfully', 201);
     }
 
     /**
