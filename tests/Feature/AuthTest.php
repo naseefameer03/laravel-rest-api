@@ -23,11 +23,13 @@ class AuthTest extends TestCase
 
         $response->assertStatus(201)
             ->assertJsonStructure([
-                'true',
+                'success' => true,
+                'message' => 'User registered successfully',
                 'data' => [
                     'user' => ['id', 'name', 'email'],
                 ],
-                'message',
+                'errors' => null,
+                'code' => 201,
             ]);
 
         $this->assertDatabaseHas('users', [
