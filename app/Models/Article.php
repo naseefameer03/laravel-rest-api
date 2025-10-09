@@ -68,7 +68,7 @@ class Article extends Model
             'article_category', // pivot table
             'article_id',       // foreign key on pivot referencing articles
             'category_id'       // foreign key on pivot referencing categories
-        )->withTimestamps();
+        );
     }
 
     public function comments()
