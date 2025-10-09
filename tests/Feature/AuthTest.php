@@ -95,6 +95,8 @@ class AuthTest extends TestCase
                 'success' => true,
                 'message' => 'Logged out successfully',
                 'data' => null,
+                'errors' => null,
+                'code' => 200
             ]);
     }
 
@@ -109,6 +111,7 @@ class AuthTest extends TestCase
         $response->assertOk()
             ->assertJson([
                 'success' => true,
+                'message' => 'User retrieved successfully',
                 'data' => [
                     'user' => [
                         'id' => $user->id,
@@ -116,7 +119,8 @@ class AuthTest extends TestCase
                         'name' => $user->name,
                     ],
                 ],
-                'message' => 'Authenticated user retrieved successfully',
+                'errors' => null,
+                'code' => 200
             ]);
     }
 }

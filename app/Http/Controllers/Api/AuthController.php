@@ -59,7 +59,7 @@ class AuthController extends Controller
         $request = request();
         $request->user()?->currentAccessToken()?->delete();
 
-        return $this->successResponse('Logged out successfully');
+        return $this->successResponse(null, 'Logged out successfully');
     }
 
     /**
@@ -67,6 +67,12 @@ class AuthController extends Controller
      */
     public function user(): JsonResponse
     {
-        return $this->successResponse(Auth::user(), 'User retrieved successfully');
+        return $this->successResponse([
+            'user' => [
+                'id' => Auth::user()?->id,
+                'email' => Auth::user()?->email,
+                'name' => Auth::user()?->name,
+            ],
+        ], 'User retrieved successfully');
     }
 }
