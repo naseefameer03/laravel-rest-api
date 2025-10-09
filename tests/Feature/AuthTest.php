@@ -96,7 +96,7 @@ class AuthTest extends TestCase
                 'message' => 'Logged out successfully',
                 'data' => null,
                 'errors' => null,
-                'code' => 200
+                'code' => 200,
             ]);
     }
 
@@ -120,7 +120,7 @@ class AuthTest extends TestCase
                     ],
                 ],
                 'errors' => null,
-                'code' => 200
+                'code' => 200,
             ]);
     }
 }
