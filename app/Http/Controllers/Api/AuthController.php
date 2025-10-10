@@ -7,12 +7,15 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\LoginRequest;
 use App\Http\Requests\Api\RegisterRequest;
 use App\Models\User;
+use App\Traits\ApiResponse;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
+    use ApiResponse;
+
     /**
      * Register a new user.
      */
@@ -24,12 +27,18 @@ class AuthController extends Controller
             'password' => bcrypt($request->password),
         ]);
 
+        $token = $user->createToken('auth_token')->plainTextToken;
+
         event(new UserRegistered($user));
 
-        return response()->json([
-            'message' => 'User registered successfully',
-            'user' => $user,
-        ], 201);
+        return $this->successResponse([
+            'user' => [
+                'id' => $user->id,
+                'name' => $user->name,
+                'email' => $user->email,
+            ],
+            'token' => $token,
+        ], 'User registered successfully', 201);
     }
 
     /**
@@ -40,16 +49,15 @@ class AuthController extends Controller
         $user = User::where('email', $request->email)->first();
 
         if (! $user || ! Hash::check($request->password, $user->password)) {
-            return response()->json(['message' => 'Invalid credentials'], 401);
+            return $this->errorResponse('Invalid credentials', null, 401);
         }
 
         $token = $user->createToken('api-token')->plainTextToken;
 
-        return response()->json([
-            'message' => 'Login successful',
+        return $this->successResponse([
             'token' => $token,
             'user' => $user,
-        ]);
+        ], 'Login successful');
     }
 
     /**
@@ -60,9 +68,7 @@ class AuthController extends Controller
         $request = request();
         $request->user()?->currentAccessToken()?->delete();
 
-        return response()->json([
-            'message' => 'Logged out successfully',
-        ]);
+        return $this->successResponse(null, 'Logged out successfully');
     }
 
     /**
@@ -70,6 +76,12 @@ class AuthController extends Controller
      */
     public function user(): JsonResponse
     {
-        return response()->json(Auth::user());
+        return $this->successResponse([
+            'user' => [
+                'id' => Auth::user()?->id,
+                'email' => Auth::user()?->email,
+                'name' => Auth::user()?->name,
+            ],
+        ], 'User retrieved successfully');
     }
 }

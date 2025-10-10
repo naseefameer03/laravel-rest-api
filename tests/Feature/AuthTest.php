@@ -22,7 +22,14 @@ class AuthTest extends TestCase
         $response = $this->postJson('/api/register', $payload);
 
         $response->assertCreated()
-            ->assertJsonStructure(['message', 'user' => ['id', 'name', 'email']]);
+            ->assertJsonStructure([
+                'success',
+                'data' => [
+                    'user' => ['id', 'name', 'email'],
+                    'token',
+                ],
+                'message',
+            ]);
 
         $this->assertDatabaseHas('users', [
             'email' => 'testuser@example.com',
@@ -44,7 +51,14 @@ class AuthTest extends TestCase
         $response = $this->postJson('/api/login', $payload);
 
         $response->assertOk()
-            ->assertJsonStructure(['message', 'token', 'user' => ['id', 'name', 'email']]);
+            ->assertJsonStructure([
+                'success',
+                'data' => [
+                    'token',
+                    'user' => ['id', 'name', 'email'],
+                ],
+                'message',
+            ]);
     }
 
     public function test_login_fails_with_invalid_credentials(): void
@@ -62,7 +76,11 @@ class AuthTest extends TestCase
         $response = $this->postJson('/api/login', $payload);
 
         $response->assertStatus(401)
-            ->assertJson(['message' => 'Invalid credentials']);
+            ->assertJson([
+                'success' => false,
+                'message' => 'Invalid credentials',
+                'data' => null,
+            ]);
     }
 
     public function test_logout_revokes_token_and_returns_success(): void
@@ -74,7 +92,13 @@ class AuthTest extends TestCase
             ->postJson('/api/logout');
 
         $response->assertOk()
-            ->assertJson(['message' => 'Logged out successfully']);
+            ->assertJson([
+                'success' => true,
+                'message' => 'Logged out successfully',
+                'data' => null,
+                'errors' => null,
+                'code' => 200,
+            ]);
     }
 
     public function test_user_returns_authenticated_user(): void
@@ -87,8 +111,17 @@ class AuthTest extends TestCase
 
         $response->assertOk()
             ->assertJson([
-                'id' => $user->id,
-                'email' => $user->email,
+                'success' => true,
+                'message' => 'User retrieved successfully',
+                'data' => [
+                    'user' => [
+                        'id' => $user->id,
+                        'email' => $user->email,
+                        'name' => $user->name,
+                    ],
+                ],
+                'errors' => null,
+                'code' => 200,
             ]);
     }
 }
