@@ -27,6 +27,8 @@ class AuthController extends Controller
             'password' => bcrypt($request->password),
         ]);
 
+        $token = $user->createToken('auth_token')->plainTextToken;
+
         event(new UserRegistered($user));
 
         return $this->successResponse([
@@ -35,6 +37,7 @@ class AuthController extends Controller
                 'name' => $user->name,
                 'email' => $user->email,
             ],
+            'token' => $token,
         ], 'User registered successfully', 201);
     }
 

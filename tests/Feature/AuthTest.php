@@ -21,15 +21,14 @@ class AuthTest extends TestCase
 
         $response = $this->postJson('/api/register', $payload);
 
-        $response->assertStatus(201)
+        $response->assertCreated()
             ->assertJsonStructure([
-                'success' => true,
-                'message' => 'User registered successfully',
+                'success',
                 'data' => [
                     'user' => ['id', 'name', 'email'],
+                    'token',
                 ],
-                'errors' => null,
-                'code' => 201,
+                'message',
             ]);
 
         $this->assertDatabaseHas('users', [
