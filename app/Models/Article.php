@@ -120,7 +120,7 @@ class Article extends Model
         return [
             'id' => $this->id,
             'title' => (string) $this->title,
-            'content' => (string) $this->body,
+            'content' => (string) $this->content,
             'published_at' => optional($this->published_at)?->toDateTimeString(),
         ];
     }
