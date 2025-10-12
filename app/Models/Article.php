@@ -16,7 +16,7 @@ use Spatie\Tags\HasTags;
 
 class Article extends Model
 {
-    use HasFactory, HasTags, InteractsWithMedia, SoftDeletes, Searchable;
+    use HasFactory, HasTags, InteractsWithMedia, Searchable, SoftDeletes;
 
     protected $fillable = [
         'user_id',
