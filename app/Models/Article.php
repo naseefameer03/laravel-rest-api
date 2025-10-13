@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
+use Laravel\Scout\Searchable;
 use Spatie\Image\Enums\Fit;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -15,7 +16,7 @@ use Spatie\Tags\HasTags;
 
 class Article extends Model
 {
-    use HasFactory, HasTags, InteractsWithMedia, SoftDeletes;
+    use HasFactory, HasTags, InteractsWithMedia, Searchable, SoftDeletes;
 
     protected $fillable = [
         'user_id',
@@ -112,5 +113,20 @@ class Article extends Model
         $this->addMediaConversion('large')
             ->fit(Fit::Contain, 1600, 1600)
             ->format('webp');
+    }
+
+    public function toSearchableArray(): array
+    {
+        return [
+            'id' => $this->id,
+            'title' => (string) $this->title,
+            'content' => (string) $this->content,
+            'published_at' => optional($this->published_at)?->toDateTimeString(),
+        ];
+    }
+
+    public function searchableAs(): string
+    {
+        return 'articles';
     }
 }
