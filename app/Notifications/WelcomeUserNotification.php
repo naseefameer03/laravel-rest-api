@@ -3,7 +3,6 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
 class WelcomeUserNotification extends Notification
@@ -25,20 +24,7 @@ class WelcomeUserNotification extends Notification
      */
     public function via(object $notifiable): array
     {
-        return ['mail', 'database'];
-    }
-
-    /**
-     * Get the mail representation of the notification.
-     */
-    public function toMail(object $notifiable): MailMessage
-    {
-        return (new MailMessage)
-            ->subject('Welcome to Our Platform')
-            ->greeting('Hello '.$notifiable->name.',')
-            ->line('We’re excited to have you on board!')
-            ->action('Visit Dashboard', url('/'))
-            ->line('Thank you for registering!');
+        return ['database'];
     }
 
     public function toDatabase($notifiable)

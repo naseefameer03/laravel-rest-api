@@ -12,15 +12,14 @@ Route::get('/', function () {
     return response()->json(['message' => 'Route not found'], 404);
 });
 
-Route::post('login', [AuthController::class, 'login'])->name('login');
 Route::post('register', [AuthController::class, 'register']);
+Route::post('login', [AuthController::class, 'login'])->name('login');
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::get('user', [AuthController::class, 'user']);
     Route::post('logout', [AuthController::class, 'logout']);
 
-    Route::delete('/users/{user}', [UserController::class, 'destroy'])
-        ->middleware('permission:delete users');
+    Route::get('user', [AuthController::class, 'user']);
+    Route::delete('/users/{user}', [UserController::class, 'destroy']);
 
     Route::prefix('v1')->group(function () {
         Route::apiResource('articles', ArticleController::class);
